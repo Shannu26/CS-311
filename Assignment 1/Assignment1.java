@@ -48,14 +48,21 @@ class Assignment1{
 		HashSet<String> dataTypes = new HashSet<String>(Arrays.asList(dataTypeArray));
 
 		HashMap<String, ArrayList<Object>> tokensCount = new HashMap<String, ArrayList<Object>>();
+		HashMap<String, Integer> tokenClassCount = new HashMap<String, Integer>();
+		tokenClassCount.put("Keyword", 0);
+		tokenClassCount.put("Special Char", 0);
+		tokenClassCount.put("Data Type", 0);
+		tokenClassCount.put("Number", 0);
+		tokenClassCount.put("Identifier", 0);
 
 		for(String s: input){
+			ArrayList<Object> tokenInfo;
 			if(tokensCount.containsKey(s)){
-				ArrayList<Object> tokenInfo = tokensCount.get(s);
+				tokenInfo = tokensCount.get(s);
 				tokenInfo.set(0, (int) tokenInfo.get(0) + 1);
 			}
 			else{
-				ArrayList<Object> tokenInfo = new ArrayList<Object>();
+				tokenInfo = new ArrayList<Object>();
 				tokenInfo.add(1);
 				if(keywords.contains(s)){
 					tokenInfo.add("Keyword");
@@ -74,12 +81,21 @@ class Assignment1{
 				}
 				tokensCount.put(s, tokenInfo);
 			}
+
+			tokenClassCount.put(String.valueOf(tokenInfo.get(1)), tokenClassCount.get(tokenInfo.get(1)) + 1);
 		}
 
+		System.out.println("|" + "\t\t" + "Token" + "\t\t" + "|" + "\t\t" + "Token Count" + "\t\t" + "|" + "\t\t" + "Token Class" + "\t\t" + "|");
+		System.out.println("---------------------------------------------------------");
 		for(HashMap.Entry<String, ArrayList<Object>> entry: tokensCount.entrySet()){
 			String token = entry.getKey();
 			ArrayList<Object> tokenInfo = entry.getValue();
-			System.out.println(token + " " + tokenInfo.get(0) + " " + tokenInfo.get(1));
+			System.out.println("|" + "\t\t" + token + "\t\t" + "|" + "\t\t" + tokenInfo.get(0) + "\t\t" + "|" + "\t\t" + tokenInfo.get(1) + "\t\t" + "|");
+			System.out.println("---------------------------------------------------------");
+		}
+
+		for(HashMap.Entry<String, Integer> entry: tokenClassCount.entrySet()){
+			System.out.println(entry.getKey() + " " + entry.getValue());
 		}
 	}
 }
