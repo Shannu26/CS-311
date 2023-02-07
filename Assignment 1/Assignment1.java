@@ -85,17 +85,27 @@ class Assignment1{
 			tokenClassCount.put(String.valueOf(tokenInfo.get(1)), tokenClassCount.get(tokenInfo.get(1)) + 1);
 		}
 
-		System.out.println("|" + "\t\t" + "Token" + "\t\t" + "|" + "\t\t" + "Token Count" + "\t\t" + "|" + "\t\t" + "Token Class" + "\t\t" + "|");
-		System.out.println("---------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("|" + "\t" + "Token" + "\t" + "|" + "\t" + "Token Count" + "\t" + "|" + "\t" + "Token Class" + "\t" + "|");
+		System.out.println("-----------------------------------------------------------------");
 		for(HashMap.Entry<String, ArrayList<Object>> entry: tokensCount.entrySet()){
 			String token = entry.getKey();
 			ArrayList<Object> tokenInfo = entry.getValue();
-			System.out.println("|" + "\t\t" + token + "\t\t" + "|" + "\t\t" + tokenInfo.get(0) + "\t\t" + "|" + "\t\t" + tokenInfo.get(1) + "\t\t" + "|");
-			System.out.println("---------------------------------------------------------");
+			System.out.print("|" + "\t" + token + "\t" + "|" + "\t      " + tokenInfo.get(0) + "\t\t" + "|" + "\t" + tokenInfo.get(1) + "\t");
+			if(String.valueOf(tokenInfo.get(1)).length() < 8) System.out.print("\t");
+			System.out.println("|");
+			System.out.println("-----------------------------------------------------------------");
 		}
 
+		System.out.println("\n\n---------------------------------------------------------");
+		System.out.println("|" + "\t" + "Token Class" + "\t" + "|" + "\t" + "Token Class Count" + "\t" + "|");
+		System.out.println("---------------------------------------------------------");
+
 		for(HashMap.Entry<String, Integer> entry: tokenClassCount.entrySet()){
-			System.out.println(entry.getKey() + " " + entry.getValue());
+			System.out.print("|" + "\t" + entry.getKey() + "\t");
+			if(String.valueOf(entry.getKey()).length() < 8) System.out.print("\t");
+			System.out.println("|" + "\t\t" + entry.getValue() + "\t\t" + "|");
+			System.out.println("---------------------------------------------------------");
 		}
 	}
 }
