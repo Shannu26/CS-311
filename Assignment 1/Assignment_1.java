@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Arrays;
 
-class Assignment1{
+class Assignment_1{
 	public static void main(String args[]){
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Enter the file name: ");
@@ -40,10 +40,12 @@ class Assignment1{
 	}
 
 	public static void tokenizeAndPrintOutput(ArrayList<String> input){
-		String[] keywordArray = {"if", "else", "while", "for"};
+		String[] keywordArray = {"if", "else", "while", "for", "print"};
 		HashSet<String> keywords = new HashSet<String>(Arrays.asList(keywordArray));
-		String[] specialArray = {"(", ")", "[", "]", "+", "-", "/", "*", ";", "=", "==", "<", ">", "<=", ">=", "{", "}"};
-		HashSet<String> specials = new HashSet<String>(Arrays.asList(specialArray));
+		String[] specialCharsArray = {"(", ")", "[", "]", ";", "{", "}"};
+		HashSet<String> specialChars = new HashSet<String>(Arrays.asList(specialCharsArray));
+		String[] operatorsArray = {"+", "-", "/", "*", "=", "==", "<", ">", "<=", ">=", "++", "--", "!="};
+		HashSet<String> operators = new HashSet<String>(Arrays.asList(operatorsArray));
 		String[] dataTypeArray = {"int", "char", "float", "double"};
 		HashSet<String> dataTypes = new HashSet<String>(Arrays.asList(dataTypeArray));
 
@@ -51,6 +53,7 @@ class Assignment1{
 		HashMap<String, Integer> tokenClassCount = new HashMap<String, Integer>();
 		tokenClassCount.put("Keyword", 0);
 		tokenClassCount.put("Special Char", 0);
+		tokenClassCount.put("Operator", 0);
 		tokenClassCount.put("Data Type", 0);
 		tokenClassCount.put("Number", 0);
 		tokenClassCount.put("Identifier", 0);
@@ -67,8 +70,11 @@ class Assignment1{
 				if(keywords.contains(s)){
 					tokenInfo.add("Keyword");
 				}
-				else if(specials.contains(s)){
+				else if(specialChars.contains(s)){
 					tokenInfo.add("Special Char");
+				}
+				else if(operators.contains(s)){
+					tokenInfo.add("Operator");
 				}
 				else if(dataTypes.contains(s)){
 					tokenInfo.add("Data Type");
