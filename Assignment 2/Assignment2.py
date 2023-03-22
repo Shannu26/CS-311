@@ -112,7 +112,14 @@ print("18. Type Checking")
 print()
 
 print("19. Functions")
+def function(a, b):
+	print(a + b)
+function(2, 3)
+print("To create a function in python we use def keyword followed by function name. While specifying parameters that functioin accepts we don't have to provide data types of the parameters. We don't have to specify the return type of function explicitly since we don't need data types for the variables. In Java we have to give return type and parameter types.")
 print()
 
-print("20. Set")
+print("20. List Comprehension")
+L2 = [l * 2 for l in L]
+print(L2)
+print("This is a very simple way to write a for loop for a list, filter some elements from list, apply some operations to them and finally store them in a new list all in a single line of code. This feature is not avaiable in Java/C.")
 print()
