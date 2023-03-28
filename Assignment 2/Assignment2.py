@@ -64,6 +64,10 @@ print("We can use slicing to access subpart of the list/tuple/string. We can do 
 print()
 
 print("10. Index Range Checking")
+for i in range(len(L)):
+	print(L[i], end=" ")
+print()
+print("In python to loop through the list we use range() combined with len() to find length of list and generating those indices we want to generate so that we can avoid index range errors. In Java/C we use a different syntax but the functionality is same.")
 print()
 
 print("11. Dictionaries")
@@ -106,9 +110,16 @@ print("We use indentation to define code blocks. We don't have {} in python as w
 print()
 
 print("17. Type Binding")
+print("There are 2 types of type binding.\n1.Static Type Binding\n2.Dynamic Type Binding")
+print("Java/C uses static type binding where we have to specify the type of the variable while declaration. Whereas Python uses dynamic type binding which determines the type of variable during runtime so that we don't have to explicitly give the type of variable.")
 print()
 
 print("18. Type Checking")
+numberType = 10
+stringType = "String"
+print(type(numberType))
+print(type(stringType))
+print("In Python, to check the type of a variable we use type() function. Python is a 100% object oriented language. So, every variable is an instance of a particular class. The functionality is same as in Java/C but with a different syntax.")
 print()
 
 print("19. Functions")
