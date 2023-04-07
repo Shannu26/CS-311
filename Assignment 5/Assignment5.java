@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Random;
 
 import java.io.File;  
 import java.io.FileNotFoundException;
@@ -57,7 +58,8 @@ public class Assignment5{
 				production = "";
 			}
 			else if(!this.inputData.get(i).equals("}")){
-				production += " " + this.inputData.get(i);
+				if(!production.equals("")) production += " ";
+				production += this.inputData.get(i);
 			}
 		}
 
@@ -69,7 +71,41 @@ public class Assignment5{
 	}
 
 	public String randomSentence(String variable){
-		return variable;
+
+		ArrayList<String> productions = this.grammar.get(variable);
+		Random random = new Random();
+		String production = productions.get(random.nextInt(productions.size()));
+		String[] productionParts = production.split(" ");
+
+		String sentence = "";
+		for(int i = 0;i < productionParts.length;i++){
+			if(this.grammar.containsKey(productionParts[i])){
+				sentence += randomSentence(productionParts[i]);
+			}
+			else{
+				sentence += productionParts[i];
+			}
+			if(i != productionParts.length - 1) sentence += " ";
+		}
+		return sentence;
+	}
+
+	public String toString(){
+		String grammarInString = "\nGrammar Definition:\n\n";
+		for(HashMap.Entry<String,ArrayList<String>> entry : this.grammar.entrySet()){
+			String variable = entry.getKey();
+			// System.out.println(variable);
+			grammarInString += "\tVariable: " + variable + "\n";
+			grammarInString += "\tProductions:\n";
+			ArrayList<String> productions = entry.getValue();
+			for(int i = 0;i < productions.size();i++){
+				// System.out.println(productions.get(i));
+				grammarInString += "\t\t" + productions.get(i) + "\n";
+			}
+			// System.out.println();
+			grammarInString += "\n";
+		}
+		return grammarInString;
 	}
 
 	public static void main(String args[]){
@@ -78,16 +114,14 @@ public class Assignment5{
 		String fileName = s.next();
 
 		Assignment5 rsg = new Assignment5(fileName);
-		rsg.randomSentence();
+		System.out.println(rsg.toString());
+		String sentence1 = rsg.randomSentence();
+		System.out.println("Sentence 1: " + sentence1);
+		String sentence2 = rsg.randomSentence();
+		System.out.println("Sentence 2: " + sentence2);
+		String sentence3 = rsg.randomSentence();
+		System.out.println("Sentence 3: " + sentence3);
 
-		for(HashMap.Entry<String,ArrayList<String>> entry : rsg.grammar.entrySet()){
-			String variable = entry.getKey();
-			System.out.println(variable);
-			ArrayList<String> productions = entry.getValue();
-			for(int i = 0;i < productions.size();i++){
-				System.out.println(productions.get(i));
-			}
-			System.out.println();
-		}
+		
 	}
 }
