@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <list>
@@ -16,6 +17,10 @@ class Assignment5{
 			this->filename = filename;
 			this->inputData = readInputFromFile();
 			this->grammar = formGrammarFromInputData();
+		}
+
+		~Assignment5(){
+			cout << "Destructing Class Variables\n";
 		}
 
 		list<string> readInputFromFile(){
@@ -40,6 +45,7 @@ class Assignment5{
 		unordered_map<string, list<string>> formGrammarFromInputData(){
 			unordered_map<string, list<string>> grammar;
 
+			list<string> productions;
 			bool isNextWordVariable = false;
 			string currentVariableName = "";
 			string production = "";
@@ -49,19 +55,25 @@ class Assignment5{
 					isNextWordVariable = true;
 				}
 				else if(isNextWordVariable){
-					list<string> productions;
-					grammar[itr] = productions;
 					currentVariableName = itr;
 					isNextWordVariable = false;
 				}
 				else if(itr.compare(";") == 0){
-					list<string> productions = grammar.at(currentVariableName);
 					productions.push_back(production);
 					production = "";
 				}
 				else if(itr.compare("}") != 0){
 					if(production.compare("") != 0) production += " ";
 					production += itr;
+				}
+				else{
+					list<string> productionsToAdd;
+					for(auto i: productions){
+						productionsToAdd.push_back(i);
+					}
+
+					grammar[currentVariableName] = productionsToAdd;
+					productions.clear();
 				}
 			}
 
@@ -74,52 +86,57 @@ class Assignment5{
 
 		string randomSentence(string variable){
 			list<string> productions = this->grammar.at(variable);
-			cout << "Hello";
-			list<string>::iterator it;
-    		for (it = productions.begin(); it != productions.end(); ++it){
-    			cout << *it << "\n";
-    		}
-			// int value = 0;
-			// for(auto itr: productions){
-			// 	if(value == 0){
-			// 		cout << "Hello";
-			// 		string sentence = "";
-			// 		stringstream ss(itr);
-			// 		string word;
-			// 		while(ss >> word){
-			// 			sentence += word;
-			// 			sentence += " ";
-			// 		}
-			// 		return sentence;
-			// 	}
-			// 	value--;
-			// }
+			
+			int value = rand() % productions.size();
+			for(auto itr: productions){
+				if(value == 0){
+					string sentence = "";
+					stringstream ss(itr);
+					string word;
+					while(ss >> word){
+						if(this->grammar.find(word) != this->grammar.end()){
+							sentence += randomSentence(word);
+						}
+						else{
+							sentence += word;
+							sentence += " ";
+						}
+					}
+					return sentence;
+				}
+				value--;
+			}
 			return "";
 		}
+
+		friend ostream &operator<<(ostream &output, const Assignment5 &asg) { 
+        	output << "\nGrammar Definition:\n\n";  
+        	for(auto itr: asg.grammar){
+        		string variable = itr.first;
+        		list<string> productions = itr.second;
+        		output << "\tVariable: " << variable << "\n";
+        		output << "\tProductions:\n";
+        		for(auto it: productions){
+        			output << "\t\t" << it << "\n";
+        		}
+        		output << "\n";
+        	}
+        	return output;         
+      	}
 
 };
 
 int main(){
-	Assignment5 asg("Grammar.txt");
+	srand(time(0));
+	string filename;
+	cout << "Enter the Grammar File Name: ";
+	cin >> filename;
+	Assignment5 asg(filename);
+	cout << asg;
+	cout << "Sentence 1: ";
 	cout << asg.randomSentence();
+	cout << "\nSentence 2: ";
+	cout << asg.randomSentence();
+	cout << "\nSentence 3: ";
+	cout << asg.randomSentence() << "\n";
 }
-
-	public String randomSentence(String variable){
-
-		ArrayList<String> productions = this.grammar.get(variable);
-		Random random = new Random();
-		String production = productions.get(random.nextInt(productions.size()));
-		String[] productionParts = production.split(" ");
-
-		String sentence = "";
-		for(int i = 0;i < productionParts.length;i++){
-			if(this.grammar.containsKey(productionParts[i])){
-				sentence += randomSentence(productionParts[i]);
-			}
-			else{
-				sentence += productionParts[i];
-			}
-			if(i != productionParts.length - 1) sentence += " ";
-		}
-		return sentence;
-	}
