@@ -121,7 +121,5 @@ public class Assignment5{
 		System.out.println("Sentence 2: " + sentence2);
 		String sentence3 = rsg.randomSentence();
 		System.out.println("Sentence 3: " + sentence3);
-
-		
 	}
 }

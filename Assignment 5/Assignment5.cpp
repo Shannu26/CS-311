@@ -33,11 +33,6 @@ class Assignment5{
 			}
 
 			myReader.close();
-
-			// list<string>::iterator it;
-    		// for (it = inputData.begin(); it != inputData.end(); ++it){
-    		// 	cout << *it << "\n";
-    		// }
 			
 			return inputData;
 		}
@@ -123,7 +118,6 @@ class Assignment5{
         	}
         	return output;         
       	}
-
 };
 
 int main(){
